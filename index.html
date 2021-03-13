@@ -7,41 +7,67 @@
   <meta name="description" content="Play Novem">
   <meta name="author" content="Satoshi Tanaka">
   <meta name="keywords" content="play,board game,game,novem">
+  <style type="text/css">
+    td.black_cell{
+      border-top-color:black;
+      border-left-color:black;
+    }
+    td.black_cell_r{
+      border-top-color:black;
+      border-right-color:black;
+      border-left-color:black;
+    }
+    td.black_cell_b{
+      border-top-color:black;
+      border-bottom-color:black;
+      border-left-color:black;
+    }
+    td.black_cell_br{
+      border-top-color:black;
+      border-bottom-color:black;
+      border-right-color:black;
+      border-left-color:black;
+    }
+  </style>
 </head>
 
 <body>
   <h1>Play Novem</h1>
 
   <div id="board">
-    <table border="1" width="350" height="350" cellspacing="0" cellpadding="5" bordercolor="black">
+    <table border="1" width="350" height="350" cellspacing="0" cellpadding="5" bordercolor="white">
       <tr id="board-head" align="center">
       <td width="50"></td>
-      <td width="100">c1</td>
-      <td width="100">c2</td>
-      <td width="100">c3</td>
+      <td width="100"><button onclick="buttonClick('c', '1')">c1</button></td>
+      <td width="100"><button onclick="buttonClick('c', '2')">c2</button></td>
+      <td width="100"><button onclick="buttonClick('c', '3')">c3</button></td>
       </tr>
       <tr id="row1" align="center" height="100">
-      <td>r1</td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td><button onclick="buttonClick('r', '1')">r1</button></td>
+      <td class="black_cell"></td>
+      <td class="black_cell"></td>
+      <td class="black_cell_r"></td>
       </tr>
       <tr id="row2" align="center" height="100">
-      <td>r2</td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td><button onclick="buttonClick('r', '1')">r2</button></td>
+      <td class="black_cell"></td>
+      <td class="black_cell"></td>
+      <td class="black_cell_r"></td>
       </tr>
       <tr id="row3" align="center" height="100">
-      <td>r3</td>
-      <td></td>
-      <td></td>
-      <td></td>
+      <td><button onclick="buttonClick('r', '1')">r3</button></td>
+      <td class="black_cell_b"></td>
+      <td class="black_cell_b"></td>
+      <td class="black_cell_br"></td>
       </tr>
       </table>
   </div>
 
-  <button onclick="">New Game</button>
+<script>
+  function buttonClick(d, n){
+    console.log(d+n);
+  }
+</script>
 
 </body>
 </html>
