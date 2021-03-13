@@ -34,6 +34,14 @@
 <body>
   <h1>Play Novem</h1>
 
+  <div id="player-type">You are a player.</div>
+  <div id="player-rc"><strong>Select a Row.</strong></div>
+  <div id="round">Round: 1</div>
+  <div id="turn">You are Attacking</div>
+  <div id="point-r">Your point = 0</div>
+  <div id="point-c">Opponent point = 0</div>
+
+
   <div id="board">
     <table border="1" width="350" height="350" cellspacing="0" cellpadding="5" bordercolor="white">
       <tr id="board-head" align="center">
@@ -62,6 +70,14 @@
       </tr>
       </table>
   </div>
+
+  <!-- <div id="draw"><button>Draw</button></div> -->
+  <hr>
+  <div id="waiting">
+    <img src="load.gif" width="30" height="30" alt="Loading..." /><br>
+    Waiting for the opponen action.
+  </div>
+
 
 <script>
   function buttonClick(d, n){
