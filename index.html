@@ -121,6 +121,24 @@
     // 入力を送信する
     console.log(d+n);
   }
+
+
+  // websocket
+  var websocket = new WebSocket("ws://127.0.0.1:6789/");
+
+  // send messages
+
+  // receive messages
+  websocket.onmessage = function (event) {
+      data = JSON.parse(event.data);
+      switch (data.type) {
+          case 'play':
+              console.log("play");
+              break;
+          default:
+              console.error("unsupported event", data);
+      }
+  };
 </script>
 
 </body>
