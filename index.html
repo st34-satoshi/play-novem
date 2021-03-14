@@ -40,8 +40,8 @@
   Enter your name, Row/Column, and handicap. <br>
   <input type="text" id="player-name" placeholder="Your Name" required minlength="1" maxlength="18" size="10">
   <select id="player-type">
-    <option value="row">Row Player</option>
-    <option value="column">Column Player</option>
+    <option value="Row">Row Player</option>
+    <option value="Column">Column Player</option>
   </select>
   <select id="player-handicap">
     <option value="-5">-5</option>
@@ -128,13 +128,15 @@
     const player_type = document.getElementById("player-type").value;
     const player_handicap = document.getElementById("player-handicap").value;
     console.log(player_name + player_type + player_handicap);
-    websocket.send(JSON.stringify({action: "make-room", name: player_name, type: player_type, hadicap: player_handicap}));
+    websocket.send(JSON.stringify({action: "make-room", name: player_name, player_type: player_type, handicap: player_handicap}));
   }
 
   // receive messages
   websocket.onmessage = function (event) {
       data = JSON.parse(event.data);
-      switch (data.type) {
+      console.log("receive data. " + data);
+      console.log(data);
+      switch (data.action) {
           case 'play':
               console.log("play");
               break;
