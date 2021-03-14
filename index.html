@@ -38,12 +38,12 @@
   <h2>Home</h2>
   <h3>Make a Room</h3>
   Enter your name, Row/Column, and handicap. <br>
-  <input type="text" id="make-room" placeholder="Your Name" required minlength="1" maxlength="18" size="10">
-  <select name="player-type">
+  <input type="text" id="player-name" placeholder="Your Name" required minlength="1" maxlength="18" size="10">
+  <select id="player-type">
     <option value="row">Row Player</option>
     <option value="column">Column Player</option>
   </select>
-  <select name="handicaps">
+  <select id="player-handicap">
     <option value="-5">-5</option>
     <option value="-4">-4</option>
     <option value="-3" selected>-3</option>
@@ -54,7 +54,7 @@
     <option value="2">2</option>
   </select>
   <br>
-  <button onclick="buttonMakeRoom()">make a room</button>
+  <button onclick="makeRoomRequest()">make a room</button>
 
   <h3>Join a Room</h3>””
   <h3>Room List</h3>
@@ -117,16 +117,19 @@
   function buttonClick(d, n){
     console.log(d+n);
   }
-  function buttonMakeRoom(){
-    // 入力を送信する
-    console.log(d+n);
-  }
-
 
   // websocket
   var websocket = new WebSocket("ws://127.0.0.1:6789/");
 
   // send messages
+  function makeRoomRequest() {
+    console.log("make a room buttom is clicked");
+    const player_name = document.getElementById("player-name").value;
+    const player_type = document.getElementById("player-type").value;
+    const player_handicap = document.getElementById("player-handicap").value;
+    console.log(player_name + player_type + player_handicap);
+    websocket.send(JSON.stringify({action: "make-room", name: player_name, type: player_type, hadicap: player_handicap}));
+  }
 
   // receive messages
   websocket.onmessage = function (event) {
@@ -136,7 +139,8 @@
               console.log("play");
               break;
           default:
-              console.error("unsupported event", data);
+              console.log("unsupported event", data);
+              // console.error("unsupported event", data);
       }
   };
 </script>
