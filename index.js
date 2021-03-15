@@ -14,6 +14,8 @@ function buttonClick(d, n){
     }
     // send the action to the server
     actionRequest(d+n);
+    // display waiting view
+    document.getElementById("waiting").style.display = "block";
 }
 
 function makeRoomList(data){
