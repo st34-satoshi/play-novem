@@ -139,6 +139,11 @@
     }
   }
 
+  function switchToPlayingView(){
+    document.getElementById("playing-view").style.display ="block";
+    document.getElementById("home-view").style.display ="none";
+  }
+
   // websocket
   var websocket = new WebSocket("ws://127.0.0.1:6789/");
 
@@ -148,7 +153,7 @@
     const player_name = document.getElementById("player-name").value;
     const player_type = document.getElementById("player-type").value;
     const player_handicap = document.getElementById("player-handicap").value;
-    console.log(player_name + player_type + player_handicap);
+    // console.log(player_name + player_type + player_handicap);
     websocket.send(JSON.stringify({action: "make-room", name: player_name, player_type: player_type, handicap: player_handicap}));
   }
 
@@ -158,8 +163,9 @@
       console.log("receive data. " + data);
       console.log(data);
       switch (data.action) {
-          case 'play':
-            console.log("play");
+          case 'playing':
+            console.log("playing");
+            switchToPlayingView();
             break;
           case 'room_list':
             console.log("receive room list");
