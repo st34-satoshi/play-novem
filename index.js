@@ -30,7 +30,7 @@ function makeRoomList(data){
 }
 
 function drawTile(tdId, bottom, top){
-  // var svg = d3.select("#"+tdId).append("svg").attr("width", 100).attr("height", 100);
+  document.getElementById(tdId).innerHTML = ""; // reset
   var svg = d3.select("#"+tdId)
               .append("svg")
               .attr("width", 100)
