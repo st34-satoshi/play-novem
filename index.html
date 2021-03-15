@@ -58,6 +58,9 @@
 
   <h3>Join a Room</h3>””
   <h3>Room List</h3>
+  <!-- created using javascript -->
+  <ul id="room_list"></ul>
+
   <!-- end of home view -->
   </div>
 
@@ -118,6 +121,24 @@
     console.log(d+n);
   }
 
+  function makeRoomList(data){
+    console.log("make a room list!!");
+    var room_list = document.getElementById("room_list");
+    // room_list.remove();  // reset
+    for (var room_id in data){
+      if (room_id == "action"){
+        continue;
+      }
+      var li = document.createElement("li");
+      var text = "";
+      for (var element in data[room_id]){
+        text += element + "=" + data[room_id][element] + ", ";
+      }
+      li.appendChild(document.createTextNode(text));
+      room_list.appendChild(li);
+    }
+  }
+
   // websocket
   var websocket = new WebSocket("ws://127.0.0.1:6789/");
 
@@ -138,11 +159,15 @@
       console.log(data);
       switch (data.action) {
           case 'play':
-              console.log("play");
-              break;
+            console.log("play");
+            break;
+          case 'room_list':
+            console.log("receive room list");
+            makeRoomList(data);
+            break
           default:
-              console.log("unsupported event", data);
-              // console.error("unsupported event", data);
+            // console.log("unsupported event", data);
+            console.error("unsupported event", data);
       }
   };
 </script>
