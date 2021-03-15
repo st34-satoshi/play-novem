@@ -139,9 +139,21 @@
     }
   }
 
-  function switchToPlayingView(){
+  function switchToPlayingView(data){
     document.getElementById("playing-view").style.display ="block";
     document.getElementById("home-view").style.display ="none";
+
+    // set the board
+    bottom_board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    top_board = [[0, 0, 0], [0, 0, 0], [0, 0, 0]];
+    var board = data["board"];
+    for (var c in board){
+      if (c < 9){  // bottom
+        bottom_board[c/3|0][c%3] = board[c]
+      }else{
+        top_board[(c-9)/3|0][c%3] = board[c]
+      }
+    }
   }
 
   // websocket
@@ -165,7 +177,7 @@
       switch (data.action) {
           case 'playing':
             console.log("playing");
-            switchToPlayingView();
+            switchToPlayingView(data);
             break;
           case 'room_list':
             console.log("receive room list");
