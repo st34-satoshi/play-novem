@@ -29,6 +29,7 @@
       border-left-color:black;
     }
   </style>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
 
 <body>
@@ -66,6 +67,7 @@
 
   <!-- When playing, change to display -->
   <div id="playing-view" style="display:none">
+  <!-- <div id="playing-view" style="display:block"> -->
 
   <h2>Playing</h2>
   <div id="player-type">You are a player.</div>
@@ -86,21 +88,21 @@
       </tr>
       <tr id="row1" align="center" height="100">
       <td><button onclick="buttonClick('r', '1')">r1</button></td>
-      <td class="black_cell"></td>
-      <td class="black_cell"></td>
-      <td class="black_cell_r"></td>
+      <td class="black_cell" id="cell00"></td>
+      <td class="black_cell" id="cell01"></td>
+      <td class="black_cell_r" id="cell02"></td>
       </tr>
       <tr id="row2" align="center" height="100">
       <td><button onclick="buttonClick('r', '1')">r2</button></td>
-      <td class="black_cell"></td>
-      <td class="black_cell"></td>
-      <td class="black_cell_r"></td>
+      <td class="black_cell" id="cell10"></td>
+      <td class="black_cell" id="cell11"></td>
+      <td class="black_cell_r" id="cell12"></td>
       </tr>
       <tr id="row3" align="center" height="100">
       <td><button onclick="buttonClick('r', '1')">r3</button></td>
-      <td class="black_cell_b"></td>
-      <td class="black_cell_b"></td>
-      <td class="black_cell_br"></td>
+      <td class="black_cell_b" id="cell20"></td>
+      <td class="black_cell_b" id="cell21"></td>
+      <td class="black_cell_br" id="cell22"></td>
       </tr>
       </table>
   </div>
@@ -139,6 +141,63 @@
     }
   }
 
+  function drawTile(tdId, bottom, top){
+    console.log("draw tile, " + tdId);
+    // var svg = d3.select("#"+tdId).append("svg").attr("width", 100).attr("height", 100);
+    var svg = d3.select("#"+tdId)
+                .append("svg")
+                .attr("width", 100)
+                .attr("height", 100);
+    // console.log(svg);
+    if(bottom == 0){
+      // do nothing. no tile
+    } else if (top == 0){
+      // only 1 tile.
+      svg.append("rect")
+        .attr("x", 20)
+        .attr("y", 20)
+        .attr("rx", 10)  // 丸角にする
+        .attr("ry", 10)
+        .attr("fill", "white")
+        .attr("stroke", "black")
+        .attr("width", 60)
+        .attr("height", 60);
+      svg.append("text")
+        .attr("x", 35)
+        .attr("y", 65)
+        .attr("stroke", "black")
+        .attr("font-size", 40)
+        .text(bottom);
+    }else{
+      // 2 tiles.
+      // d3.select("#"+tdId).append("svg").attr("width", 100).attr("height", 100)
+      svg.append("rect")
+        .attr("x", 25)
+        .attr("y", 15)
+        .attr("rx", 10)  // 丸角にする
+        .attr("ry", 10)
+        .attr("fill", "white")
+        .attr("stroke", "black")
+        .attr("width", 60)
+        .attr("height", 60);
+      svg.append("rect")
+        .attr("x", 15)
+        .attr("y", 25)
+        .attr("rx", 10)  // 丸角にする
+        .attr("ry", 10)
+        .attr("fill", "white")
+        .attr("stroke", "black")
+        .attr("width", 60)
+        .attr("height", 60);
+      svg.append("text")
+        .attr("x", 30)
+        .attr("y", 70)
+        .attr("stroke", "black")
+        .attr("font-size", 40)
+        .text(top);
+    }
+  }
+
   function switchToPlayingView(data){
     document.getElementById("playing-view").style.display ="block";
     document.getElementById("home-view").style.display ="none";
@@ -152,6 +211,13 @@
         bottom_board[c/3|0][c%3] = board[c]
       }else{
         top_board[(c-9)/3|0][c%3] = board[c]
+      }
+    }
+    // draw the board
+    for (let i=0;i<3;i++){
+      for(let j=0;j<3;j++){
+        cell_id = "cell" + i + j;
+        drawTile(cell_id, bottom_board[i][j], top_board[i][j]);
       }
     }
   }
