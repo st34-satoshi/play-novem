@@ -1,4 +1,5 @@
 var PLAYER_TYPE = "Viewer";  // Row, Column, or Viewer
+var ROOM_ID = "";
 
 function buttonClick(d, n){
     // Row or Column is selected
@@ -13,7 +14,7 @@ function buttonClick(d, n){
         return
     }
     // send the action to the server
-    actionRequest(d+n);
+    actionRequest(d+n, ROOM_ID);
     // display waiting view
     document.getElementById("waiting").style.display = "block";
 }
@@ -164,6 +165,7 @@ function switchToPlayingView(data){
 
   // set global variable
   PLAYER_TYPE = data["type"];
+  ROOM_ID = data["room_id"];
 }
 
 // websocket
@@ -184,8 +186,8 @@ function joinRoomRequest() {
     const player_type = document.getElementById("join-player-type").value;
     websocket.send(JSON.stringify({action: "join-room", name: player_name, player_type: player_type, room_id: room_id}));
 }
-function actionRequest(action) {
-    websocket.send(JSON.stringify({action: "play-action", play_action: action}));
+function actionRequest(action, room_id) {
+    websocket.send(JSON.stringify({action: "play-action", play_action: action, room_id: room_id}));
 }
 
 // receive messages
