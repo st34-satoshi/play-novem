@@ -1,6 +1,19 @@
+var PLAYER_TYPE = "Viewer";  // Row, Column, or Viewer
 
 function buttonClick(d, n){
-  console.log(d+n);
+    // Row or Column is selected
+    console.log("selected " + d+n);
+    if (PLAYER_TYPE == "Viewer"){
+        return
+    }
+    if (PLAYER_TYPE == "Row" && d=="c"){
+        return
+    }
+    if (PLAYER_TYPE == "Column" && d=="r"){
+        return
+    }
+    // send the action to the server
+    actionRequest(d+n);
 }
 
 function makeRoomList(data){
@@ -114,14 +127,14 @@ function switchToPlayingView(data){
   // set player
   const player_type = document.getElementById("playing-type");
   player_type.innerHTML = "You are " + data["type"];
-  //
+  // set Row or Column
   const player_rc = document.getElementById("playing-rc");
   if (data["type"] == "Row" || data["type"] == "Column"){
     player_rc.innerHTML = "<strong>Select a " + data["type"] + "</strong>";
   }else{
     player_rc.style.display = "none";
   }
-  //
+  // set round and turn
   const playing_round = document.getElementById("playing-round");
   var round = data["round"];
   playing_round.innerHTML = "Round: " + round;
@@ -138,7 +151,7 @@ function switchToPlayingView(data){
       playing_turn.innerHTML = "Row is Attacking";
     }
   }
-  //
+  // set point
   const point_r = document.getElementById("point-r");
   point_r.innerHTML = "Row point: " + data["row_point"];
   const point_c = document.getElementById("point-c");
@@ -146,6 +159,9 @@ function switchToPlayingView(data){
   
   // waiting
   document.getElementById("waiting").style.display = "none";
+
+  // set global variable
+  PLAYER_TYPE = data["type"];
 }
 
 // websocket
@@ -153,21 +169,21 @@ var websocket = new WebSocket("ws://127.0.0.1:6789/");
 
 // send messages
 function makeRoomRequest() {
-  console.log("make a room buttom is clicked");
+  console.log("make a room button is clicked");
   const player_name = document.getElementById("player-name").value;
   const player_type = document.getElementById("player-type").value;
   const player_handicap = document.getElementById("player-handicap").value;
-  // console.log(player_name + player_type + player_handicap);
   websocket.send(JSON.stringify({action: "make-room", name: player_name, player_type: player_type, handicap: player_handicap}));
 }
 function joinRoomRequest() {
-    // TODO
-    console.log("join the room buttom is clicked");
+    console.log("join the room button is clicked");
     const room_id = document.getElementById("join-room-id").value;
     const player_name = document.getElementById("join-player-name").value;
     const player_type = document.getElementById("join-player-type").value;
-    // console.log(player_name + player_type + player_handicap);
     websocket.send(JSON.stringify({action: "join-room", name: player_name, player_type: player_type, room_id: room_id}));
+}
+function actionRequest(action) {
+    websocket.send(JSON.stringify({action: "play-action", play_action: action}));
 }
 
 // receive messages
