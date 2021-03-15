@@ -70,10 +70,10 @@
   <!-- <div id="playing-view" style="display:block"> -->
 
   <h2>Playing</h2>
-  <div id="player-type">You are a player.</div>
-  <div id="player-rc"><strong>Select a Row.</strong></div>
-  <div id="round">Round: 1</div>
-  <div id="turn">You are Attacking</div>
+  <div id="playing-type">You are a player.</div>
+  <div id="playing-rc"><strong>Select a Row.</strong></div>
+  <div id="playing-round">Round: 1</div>
+  <div id="playing-turn">You are Attacking</div>
   <div id="point-r">Your point = 0</div>
   <div id="point-c">Opponent point = 0</div>
 
@@ -142,7 +142,6 @@
   }
 
   function drawTile(tdId, bottom, top){
-    console.log("draw tile, " + tdId);
     // var svg = d3.select("#"+tdId).append("svg").attr("width", 100).attr("height", 100);
     var svg = d3.select("#"+tdId)
                 .append("svg")
@@ -220,6 +219,38 @@
         drawTile(cell_id, bottom_board[i][j], top_board[i][j]);
       }
     }
+    // set player
+    const player_type = document.getElementById("playing-type");
+    player_type.innerHTML = "You are " + data["type"];
+    //
+    const player_rc = document.getElementById("playing-rc");
+    if (data["type"] == "Row" || data["type"] == "Column"){
+      player_rc.innerHTML = "<strong>Select a " + data["type"] + "</strong>";
+    }else{
+      player_rc.style.display = "none";
+    }
+    //
+    const playing_round = document.getElementById("playing-round");
+    var round = data["round"];
+    playing_round.innerHTML = "Round: " + round;
+    const playing_turn = document.getElementById("playing-turn");
+    if((data["type"] == "Row" && round%2 == 0) || (data["type"] == "Column" && round%2 == 1)){
+      playing_turn.innerHTML = "You are Attacking";
+    }else{
+      playing_turn.innerHTML = "You are Defending";
+    }
+    if(data["type"] == "Viewer"){
+      if (round % 2 ==0){
+        playing_turn.innerHTML = "Row is Attacking";
+      }else{
+        playing_turn.innerHTML = "Row is Attacking";
+      }
+    }
+    //
+    const point_r = document.getElementById("point-r");
+    point_r.innerHTML = "Row point: " + data["row_point"];
+    const point_c = document.getElementById("point-c");
+    point_c.innerHTML = "Column point: " + data["column_point"];
   }
 
   // websocket
