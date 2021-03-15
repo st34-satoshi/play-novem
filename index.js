@@ -107,6 +107,10 @@ function switchToPlayingView(data){
       drawTile(cell_id, bottom_board[i][j], top_board[i][j]);
     }
   }
+
+  // set room id
+  const playing_room_id = document.getElementById("playing-room-id");
+  playing_room_id.innerHTML = "Room ID " + data["room_id"];
   // set player
   const player_type = document.getElementById("playing-type");
   player_type.innerHTML = "You are " + data["type"];
