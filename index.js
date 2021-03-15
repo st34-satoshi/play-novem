@@ -6,11 +6,13 @@ function buttonClick(d, n){
 function makeRoomList(data){
   console.log("make a room list!!");
   var room_list = document.getElementById("room_list");
+  var join_room_select = document.getElementById("join-room-id");
   // room_list.remove();  // reset
   for (var room_id in data){
     if (room_id == "action"){
       continue;
     }
+    // add room list
     var li = document.createElement("li");
     var text = "";
     for (var element in data[room_id]){
@@ -18,6 +20,12 @@ function makeRoomList(data){
     }
     li.appendChild(document.createTextNode(text));
     room_list.appendChild(li);
+
+    // add join a room options
+    var id_option = document.createElement("option");
+    id_option.text = room_id;
+    id_option.value = room_id;
+    join_room_select.appendChild(id_option);
   }
 }
 
@@ -147,6 +155,15 @@ function makeRoomRequest() {
   const player_handicap = document.getElementById("player-handicap").value;
   // console.log(player_name + player_type + player_handicap);
   websocket.send(JSON.stringify({action: "make-room", name: player_name, player_type: player_type, handicap: player_handicap}));
+}
+function joinRoomRequest() {
+    // TODO
+    console.log("join the room buttom is clicked");
+    const room_id = document.getElementById("join-room-id").value;
+    const player_name = document.getElementById("join-player-name").value;
+    const player_type = document.getElementById("join-player-type").value;
+    // console.log(player_name + player_type + player_handicap);
+    websocket.send(JSON.stringify({action: "join-room", name: player_name, player_type: player_type, room_id: room_id}));
 }
 
 // receive messages

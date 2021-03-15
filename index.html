@@ -58,7 +58,19 @@
   <br>
   <button onclick="makeRoomRequest()">make a room</button>
 
-  <h3>Join a Room</h3>””
+  <h3>Join a Room</h3>
+  Enter your name, room id, and Row/Column/Viewer. <br>
+  <input type="text" id="join-player-name" placeholder="Your Name" required minlength="1" maxlength="18" size="10">
+  <select id="join-player-type">
+    <option value="Row">Row Player</option>
+    <option value="Column">Column Player</option>
+    <option value="Viewer" selected>Viewer</option>
+  </select>
+  <select id="join-room-id"></select>
+  <br>
+  <button onclick="joinRoomRequest()">join</button>
+
+
   <h3>Room List</h3>
   <!-- created using javascript -->
   <ul id="room_list"></ul>
