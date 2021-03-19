@@ -169,7 +169,7 @@ function switchToPlayingView(data){
 }
 
 // websocket
-var websocket = new WebSocket("wss://novem-server.wl.r.appspot.com/");
+var websocket = new WebSocket("wss://tmp-novem.wl.r.appspot.com/");
 // var websocket = new WebSocket("ws://127.0.0.1:8080/");  // local
 
 // send messages
